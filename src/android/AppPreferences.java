@@ -4,6 +4,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +27,21 @@ public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceC
 	private static CordovaWebView cdvWebView;
 	private static boolean watchChanges = false;
 
+	// @Override
+	// protected void pluginInitialize() {
+	// 	cdvWebView = this.webView;
+	// }
+    /**
+     * @param cordova The context of the main Activity.
+     * @param webView The associated CordovaWebView.
+     */
 	@Override
-	protected void pluginInitialize() {
-		cdvWebView = this.webView;
-	}
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        assert this.cordova == null;
+        this.cordova = cordova;
+        this.webView = webView;
+        cdvWebView = this.webView;
+    }
 
 	public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, final String key) {
 		Log.d("", "PREFERENCE CHANGE DETECTED FOR " + key);
